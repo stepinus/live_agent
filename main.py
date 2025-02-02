@@ -10,7 +10,7 @@ from livekit import rtc
 
 from whisper.stt_giga import STT as GigaSTT  # Импортируем GigaAM STT
 from whisper.tts import SileroTTS, SileroTTSOptions  # Импортируем Silero TTS
-from whisper.llm import TransformersLLM  # Импортируем TransformersLLM
+from whisper.llm import VLLMWrapper  # Импортируем TransformersLLM
 
 class UTF8JsonFormatter(logging.Formatter):
     def format(self, record):
@@ -87,7 +87,7 @@ async def entrypoint(ctx: JobContext):
                 model="v2_ctc",
                 detect_language=False
             ),
-            llm=TransformersLLM(),  # Используем TransformersLLM вместо TransformersLLMStream
+            llm=VLLMWrapper(),  # Используем TransformersLLM вместо TransformersLLMStream
             tts=tts_engine,
             chat_ctx=initial_ctx
         )

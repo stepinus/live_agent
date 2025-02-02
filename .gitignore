@@ -2,3 +2,4 @@
 .hai/
 .models/
 venv
+.whisper/__pycache__/
