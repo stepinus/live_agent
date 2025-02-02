@@ -1,0 +1,36 @@
+# Основные зависимости
+git+https://github.com/salute-developers/GigaAM.git
+numpy>=1.20.0
+ffmpeg-python
+
+# ONNX базовые зависимости
+onnx>=1.14.0
+
+# ONNX Runtime - будет установлена версия в зависимости от платформы
+onnxruntime>=1.15.0; platform_system != "Darwin" and platform_machine != "arm64"  # CPU версия для не-Apple
+onnxruntime-silicon>=1.15.0; platform_system == "Darwin" and platform_machine == "arm64"  # Для Apple Silicon
+onnxruntime-gpu>=1.15.0; platform_system == "Linux" and platform_machine == "x86_64"  # Для Linux с CUDA
+
+# Утилиты
+loguru
+tqdm
+
+# Для длинных аудио (опционально)
+pyannote.audio  # Для VAD
+soundfile      # Для работы с аудио файлами
+librosa        # Для обработки аудио
+
+# Зависимости для логирования и утилит
+tqdm           # Для отображения прогресса
+
+# LLM
+ollama
+
+# Silero TTS
+torch>=2.0.0
+torchaudio>=2.0.0
+omegaconf>=2.3.0
+
+# VLLM
+vllm>=0.6.6
+

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app  # Монтируем текущую директорию в /app
+      - ~/.cache:/root/.cache  # Кэш для моделей
+    environment:
+      - LIVEKIT_URL=${LIVEKIT_URL}
+      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET}
+      - LIVEKIT_LLM=${LIVEKIT_LLM:-TinyLlama/TinyLlama-1.1B-Chat-v1.0}
+    command: /bin/bash  # Запускаем bash вместо приложения
+    stdin_open: true  # Держим stdin открытым
+    tty: true  # Включаем TTY
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu] 

@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+.pytest_cache
+.coverage
+htmlcov/
+
+# Виртуальные окружения
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Модели и кэш (будут загружены при первом запуске)
+models/
+*.onnx
+*.pt
+*.bin
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Системные файлы
+.DS_Store
+Thumbs.db 

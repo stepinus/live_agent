@@ -1,0 +1,86 @@
+name: Agent Zero Dev Template
+version: 1.0.0
+description: Development environment for Agent Zero with Ollama server
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - workspace:/app
+      - models:/root/.cache
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - LIVEKIT_URL
+      - LIVEKIT_API_KEY
+      - LIVEKIT_API_SECRET
+      - LIVEKIT_LLM
+    ports:
+      - "7860:7860"  # Для веб-интерфейса если понадобится
+    depends_on:
+      - ollama
+
+volumes:
+  workspace:
+    name: workspace
+    mount_path: /workspace
+  models:
+    name: models
+    mount_path: /models
+  ollama:
+    name: ollama
+    mount_path: /root/.ollama
+
+endpoints:
+  - name: ollama
+    port: 11434
+    protocol: http
+  - name: dev
+    port: 7860
+    protocol: http
+
+pre_start:
+  - name: Pull models
+    command: |
+      ollama pull tinyllama
+      ollama pull mistral
+      ollama pull neural-chat
+
+resources:
+  gpu:
+    count: 1
+    type: GPU
+  memory:
+    min: 16
+    recommended: 32
+  disk:
+    min: 50
+    recommended: 100
+
+env:
+  - name: OLLAMA_HOST
+    default: http://ollama:11434
+  - name: LIVEKIT_URL
+    description: LiveKit server URL
+  - name: LIVEKIT_API_KEY
+    description: LiveKit API key
+  - name: LIVEKIT_API_SECRET
+    description: LiveKit API secret
+  - name: LIVEKIT_LLM
+    description: LLM model to use
+    default: tinyllama 
