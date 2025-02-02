@@ -2,6 +2,8 @@
 git+https://github.com/salute-developers/GigaAM.git
 numpy>=1.20.0
 ffmpeg-python
+livekit
+livekit-agents
 
 # ONNX базовые зависимости
 onnx>=1.14.0

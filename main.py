@@ -41,7 +41,7 @@ load_dotenv('.env.local')
 
 def prewarm(proc: JobProcess):
     # Настраиваем VAD с оптимальными параметрами
-    proc.userdata["vad"] = silero.VAD.load(
+    proc.userdata["vad"] = plugins.VAD.load(
         min_speech_duration = 0.05,
         min_silence_duration = 0.55,
         prefix_padding_duration = 0.5,
